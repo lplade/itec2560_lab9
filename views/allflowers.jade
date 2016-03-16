@@ -1,7 +1,15 @@
 html
-  head
-    body
-      h1 Flowers
-      ul
-        each flower in flowers
-          li #{flower.name} is #{flower.color}
+	head
+		title Flowers
+	body
+		h1 #{currentColor} Flowers
+
+		form(action="showColors", method="get")
+			select(name='colorDropDown')
+				each color in flowerColors
+					option(value='#{color}') #{color}
+			input(type="submit" name="colorButton" value="Choose color")
+
+		ul
+			each flower in flowers
+				li #{flower.name} is #{flower.color}
