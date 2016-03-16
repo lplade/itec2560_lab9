@@ -12,4 +12,7 @@ html
 
 		ul
 			each flower in flowers
-				li #{flower.name} is #{flower.color}
+				li
+					a(href="/details/#{flower.name}") #{flower.color}
+
+		a(href="/") Flowers Home Page

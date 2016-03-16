@@ -8,6 +8,8 @@ app = express();
 app.set("view engine", "jade");
 app.set("views", __dirname + "/views");
 
+app.use(express.static("public"));
+
 //Attempt to connect to mongodb
 MongoClient.connect("mongodb://localhost:27017/garden", function (err, db) {
 	assert.equal(null, err); //This will crash the app if there is an error.
@@ -63,6 +65,16 @@ MongoClient.connect("mongodb://localhost:27017/garden", function (err, db) {
 					});
 			});
 		});
+	});
+
+	app.get("/details/:flower", function(req, res){
+		var flowerName = req.params.flower;//Get value of "flower" param
+		//DB query for this flower. Use findOne and note the callback.
+		db.collection("flowers").findOne({"name":flowerName}, function(err, doc){
+			if (err) { return res.sendStatus(500);}
+			console.log(doc);
+			return res.render("flowerDetails", doc);
+		})
 	});
 
 	//All other requests, return 404 not found
