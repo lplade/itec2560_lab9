@@ -3,9 +3,9 @@ var MongoClient = require("mongodb").MongoClient;
 var engines = require("jade");
 var assert = require('assert');
 
-app express();
+app=express();
 
-app.set("view engine"), "jade");
+app.set("view engine", "jade");
 app.set("views", __dirname + "/views");
 
 //Attempt to connect to mongodb
