@@ -67,11 +67,13 @@ MongoClient.connect("mongodb://localhost:27017/garden", function (err, db) {
 		});
 	});
 
-	app.get("/details/:flower", function(req, res){
+	app.get("/details/:flower", function (req, res) {
 		var flowerName = req.params.flower;//Get value of "flower" param
 		//DB query for this flower. Use findOne and note the callback.
-		db.collection("flowers").findOne({"name":flowerName}, function(err, doc){
-			if (err) { return res.sendStatus(500);}
+		db.collection("flowers").findOne({"name": flowerName}, function (err, doc) {
+			if (err) {
+				return res.sendStatus(500);
+			}
 			console.log(doc);
 			return res.render("flowerDetails", doc);
 		})
