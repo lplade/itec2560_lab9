@@ -2,6 +2,7 @@ var express = require("express");
 var MongoClient = require("mongodb").MongoClient;
 var engines = require("jade");
 var assert = require('assert');
+var bodyParser = require('body-parser');
 
 app = express();
 
@@ -9,6 +10,9 @@ app.set("view engine", "jade");
 app.set("views", __dirname + "/views");
 
 app.use(express.static("public"));
+
+//bodyParser needed to enable routes to extract request body
+app.use(bodyParser.urlencoded({ extended : true }));
 
 //Attempt to connect to mongodb
 MongoClient.connect("mongodb://localhost:27017/garden", function (err, db) {
@@ -78,6 +82,15 @@ MongoClient.connect("mongodb://localhost:27017/garden", function (err, db) {
 			return res.render("flowerDetails", doc);
 		})
 	});
+
+	app.post("/addNewFlower", function(req, res){
+		db.collection("flowers").insert(req.body, function(err, result){
+			if (err) { return res.sendStatus(500); }
+			return res.redirect('/'); //todo send success/fail back to client
+		});
+	});
+
+	//TODO photo upload
 
 	//All other requests, return 404 not found
 	app.use(function (req, res) {
