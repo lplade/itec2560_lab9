@@ -74,17 +74,22 @@ MongoClient.connect("mongodb://localhost:27017/garden", function (err, db) {
 	app.get("/details/:flower", function (req, res) {
 		var flowerName = req.params.flower;//Get value of "flower" param
 		//DB query for this flower. Use findOne and note the callback.
-		db.collection("flowers").findOne({"name": flowerName}, function (err, doc) {
+		db.collection("flowers").find({"name": flowerName}).limit(1).next(function (err, doc) {
 			if (err) {
 				return res.sendStatus(500);
 			}
 			console.log(doc);
 			return res.render("flowerDetails", doc);
-		})
+		});
 	});
 
 	app.post("/addNewFlower", function(req, res){
-		db.collection("flowers").insert(req.body, function(err, result){
+		//TODO
+		//On the server, check that the new flower doesn't already exist.
+		// Refuse to save new flowers if they are already in the database.
+		// How will you notify the user if they try and create a flower that already exists?
+
+		db.collection("flowers").insertOne(req.body, function(err, result){
 			if (err) { return res.sendStatus(500); }
 			return res.redirect('/'); //todo send success/fail back to client
 		});
