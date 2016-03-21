@@ -88,7 +88,7 @@ MongoClient.connect("mongodb://localhost:27017/garden", function (err, db) {
 		//On the server, check that the new flower doesn't already exist.
 		// Refuse to save new flowers if they are already in the database.
 		// How will you notify the user if they try and create a flower that already exists?
-		
+
 		db.collection("flowers").insertOne(req.body, function(err, result){
 			if (err) { return res.sendStatus(500); }
 			return res.redirect('/'); //todo send success/fail back to client
