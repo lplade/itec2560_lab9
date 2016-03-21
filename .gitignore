@@ -1,5 +1,6 @@
 .idea
 node_modules
-flower_list
 *.iws
 *~
+flower_list
+flower_list_old

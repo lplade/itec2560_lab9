@@ -1,0 +1,6 @@
+[submodule "flower_list"]
+	path = flower_list
+	url = git@github.com:minneapolis-edu/flower_list.git
+[submodule "flower_list_old"]
+	path = flower_list_old
+	url = git@github.com:minneapolis-edu/flower_list_old.git
