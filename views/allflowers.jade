@@ -18,9 +18,9 @@ html
 			h2 Add New Flower
 			form(action="addNewFlower", method="post")
 				p Name
-					input#newFlowerName(name="name" type="text" placeholder="name")
+					input#newFlowerName(name="name" type="text" placeholder="name" required)
 				p Color
-					input#newFlowerColor(name="color" type="text" placeholder="color")
+					input#newFlowerColor(name="color" type="text" placeholder="color" required)
 				p Wikipedia Page
 					input#newFlowerLink(name="wiki" type="text" placeholder="wikipedia link")
 				button#saveNewFlower Save
