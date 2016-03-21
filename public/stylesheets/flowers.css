@@ -24,3 +24,10 @@ a:active {
 	color: #ffffff;
 	text-decoration: underline;
 }
+#flowerColor{
+	text-shadow: 1px 1px 2px gray;
+	text-decoration: underline;
+	text-decoration-style: dotted; /* only seems to work in Gecko browsers */
+	-webkit-text-decoration-style: dotted; /* need experimental features enabled in Chrome to use */
+
+}
