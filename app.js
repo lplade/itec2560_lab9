@@ -84,33 +84,29 @@ MongoClient.connect("mongodb://localhost:27017/garden", function (err, db) {
 	});
 
 	app.post("/addNewFlower", function(req, res){
-		//TODO
 		//On the server, check that the new flower doesn't already exist.
 		// Refuse to save new flowers if they are already in the database.
-		// How will you notify the user if they try and create a flower that already exists?
-
-		//ALL WE HAVE TO DO IS COMPARE req.body.name TO A DATABASE QUERY HOW HARD CAN THAT BE
 
 		// req.body contains { name: ___ , color: ___ , wiki: ___ }
 		console.log("Searching for: " + req.body.name);
-
-		var arghDammit = db.collection("flowers").count({"name":req.body.name});
-		console.log("Found:");
-		console.log(arghDammit);
-
-		//Can only get returns like [object Object] and [Promise { <pending> }]
-		//I just need to get a string or number or Boolean back to compare against.
-
-		//TODO if already contained in database,
-
-		//for testing
-		return res.redirect('/');
-
-		//comment out so we don't actually mangle database data while testing
-		/*db.collection("flowers").insertOne(req.body, function(err, result){
+		//
+		db.collection("flowers").count({"name":req.body.name}, function(err, result){
 			if (err) { return res.sendStatus(500); }
-			return res.redirect('/'); //todo send success/fail back to client
-		});*/
+			if (result == 0 ) {
+				//If it's not a duplicate, go ahead and add to database
+				db.collection("flowers").insertOne(req.body, function(err, result) {
+					console.log("Adding new entry");
+					if (err) {
+						return res.sendStatus(500);
+					}
+					return res.redirect('/'); //todo send success/fail back to client
+				});
+			} else {
+				// otherwise, don't add and notify user of duplicate
+				console.log("Duplicate entry - not adding");
+				return res.redirect('/'); //TODO render error notification
+			}
+		});
 	});
 
 	app.put("/updateColor", function(req, res){
