@@ -104,7 +104,7 @@ MongoClient.connect("mongodb://localhost:27017/garden", function (err, db) {
 			} else {
 				// otherwise, don't add and notify user of duplicate
 				console.log("Duplicate entry - not adding");
-				alert.log("Entry already exists - not adding");
+				//alert.log("Entry already exists - not adding"); This does not work in node.js
 				return res.redirect('/'); //TODO render error notification
 			}
 		});
