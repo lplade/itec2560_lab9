@@ -94,6 +94,8 @@ MongoClient.connect("mongodb://localhost:27017/garden", function (err, db) {
 			if (err) { return res.sendStatus(500); }
 			if (result == 0 ) {
 				//If it's not a duplicate, go ahead and add to database
+				//First convert to lowercase before saving
+				req.body.color = req.body.color.toLowerCase();
 				db.collection("flowers").insertOne(req.body, function(err, result) {
 					console.log("Adding new entry");
 					if (err) {
